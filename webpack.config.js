@@ -43,19 +43,37 @@ module.exports = {
                     loader: 'postcss-loader'
                 }
             ]
+        },
+        {
+            test:/\.css$/,
+            use:[
+                {
+                    loader:'style-loader'
+                },
+                {
+                    loader: 'css-loader',
+                },
+                {
+                    loader: 'postcss-loader'
+                }
+            ]
         }
+
     ]
     },
     plugins: [
         new HtmlWebPackPlugin({
             template: `${__dirname}/src/index.html`
     }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new webpack.HotModuleReplacementPlugin()
     ],
     devtool: "cheap-module-source-map",
     devServer: {
         contentBase: "./dist",
         open: true,
-        port: 8081
+        port: 8081,
+        hot: true,
+        hotOnly: true
     }
 }
