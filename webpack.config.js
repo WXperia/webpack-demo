@@ -1,78 +1,97 @@
 const path = require('path')
-const HtmlWebPackPlugin= require('html-webpack-plugin')
-const { CleanWebpackPlugin }  = require('clean-webpack-plugin')
+const fs = require('fs')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpack = require('webpack')
+const indexFile = `${__dirname}/example`
 module.exports = {
     mode: 'development',
-    entry: __dirname+'/src/index.js',
+    entry: {
+        main: `${indexFile}/hmr&loader/index.js`,
+    },
     output: {
-        filename: 'dist.js',
-        path: path.resolve(__dirname,'dist')
+        path: __dirname + '/dist',
+        filename: 'main.js',
     },
     module: {
-        rules: [{
-            test: /\.(png|jpg|gif)$/,
-            use: {
-                loader: 'file-loader',
-                options: {
-                    name: '[hash].[ext]',
-                    publicPath:'/'
-                }
-            }
-        },
-        {
-            test:/\.scss$/,
-            use:[
-                {
-                    loader:'style-loader'
-                },
-                {
-                    loader: 'css-loader',
-                    options: {
-                        importLoaders: 2,
-                        modules: true
+        rules: [
+            {
+                rules: [
+                    {
+                        test: /\.js$/,
+                        exclude: /node_modules/,
+                        loader: 'babel-loader'
+                        // options: {
+                        //     presets: [["@babel/preset-env", {
+                        //         useBuiltIns: 'usage',
+                        //         targets: {
+                        //             chrome: '67'
+                        //         }
+                        //     }]],
+                        // }
                     }
-                },
-                {
-                    loader: 'sass-loader',
+                ]
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: {
+                    loader: 'file-loader',
                     options: {
-                        
+                        name: '[hash].[ext]',
                     }
-                },
-                {
-                    loader: 'postcss-loader'
                 }
-            ]
-        },
-        {
-            test:/\.css$/,
-            use:[
-                {
-                    loader:'style-loader'
-                },
-                {
-                    loader: 'css-loader',
-                },
-                {
-                    loader: 'postcss-loader'
-                }
-            ]
-        }
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 2,
+                            modules: true
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
 
-    ]
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader'
+                    }
+                ]
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                    },
+                    {
+                        loader: 'postcss-loader'
+                    }
+                ]
+            }
+
+        ]
     },
     plugins: [
-        new HtmlWebPackPlugin({
-            template: `${__dirname}/src/index.html`
-    }),
+        new HtmlWebPackPlugin(),
         new CleanWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ],
     devtool: "cheap-module-source-map",
     devServer: {
-        contentBase: "./dist",
-        open: true,
-        port: 8081,
+        contentBase: "/dist",
+        open: false,
+        port: 8080,
         hot: true,
         hotOnly: true
     }

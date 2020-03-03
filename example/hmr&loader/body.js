@@ -1,11 +1,8 @@
 import './css/styl.css'
 const body = ()=>{
-    let h2 = document.createElement('h2')
-    h2.innerText = 'body'
-    document.body.appendChild(h2)
-
     let btn = document.createElement('button')
-    btn.innerText = '新增'
+    btn.setAttribute('id','btn1')
+    btn.innerText = '新增3'
     document.body.appendChild(btn)
     let item = document.createElement('div')
     document.body.appendChild(item)
