@@ -1,4 +1,4 @@
-// import '@babel/polyfill'
+import '@babel/polyfill'
 import header from './header'
 import body from './body'
 import name from './img'

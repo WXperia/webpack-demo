@@ -1,11 +1,8 @@
-const path = require('path')
-const fs = require('fs')
+
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const webpack = require('webpack')
 const indexFile = `${__dirname}/example`
 module.exports = {
-    mode: 'development',
     entry: {
         main: `${indexFile}/hmr&loader/index.js`,
     },
@@ -16,21 +13,19 @@ module.exports = {
     module: {
         rules: [
             {
-                rules: [
-                    {
-                        test: /\.js$/,
-                        exclude: /node_modules/,
-                        loader: 'babel-loader'
-                        // options: {
-                        //     presets: [["@babel/preset-env", {
-                        //         useBuiltIns: 'usage',
-                        //         targets: {
-                        //             chrome: '67'
-                        //         }
-                        //     }]],
-                        // }
-                    }
-                ]
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
+                // options: {
+                //     presets: [["@babel/preset-env", {
+                //         useBuiltIns: 'usage',
+                //         targets: {
+                //             chrome: '67'
+                //         }
+                //     }]],
+                // }
+
+
             },
             {
                 test: /\.(png|jpg|gif)$/,
@@ -85,9 +80,7 @@ module.exports = {
     plugins: [
         new HtmlWebPackPlugin(),
         new CleanWebpackPlugin(),
-        new webpack.HotModuleReplacementPlugin()
     ],
-    devtool: "cheap-module-source-map",
     devServer: {
         contentBase: "/dist",
         open: false,
