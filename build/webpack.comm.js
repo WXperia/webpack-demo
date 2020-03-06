@@ -1,4 +1,4 @@
-
+const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const indexFile = `${__dirname}/example`
@@ -7,7 +7,7 @@ module.exports = {
         main: `${indexFile}/hmr&loader/index.js`,
     },
     output: {
-        path: __dirname + '/dist',
+        path: path.resolve(__dirname,'../dist'),
         filename: 'main.js',
     },
     module: {
